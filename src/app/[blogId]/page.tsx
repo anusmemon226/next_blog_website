@@ -3,9 +3,8 @@ import CommentInput from '@/components/CommentInput'
 import Comments from '@/components/Comments'
 import { client, urlFor } from '@/sanity/client';
 import { PortableText, type SanityDocument } from "next-sanity";
-import { useDynamicRouteParams } from 'next/dist/server/app-render/dynamic-rendering';
 import Image from 'next/image'
-import { useParams, useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 
@@ -27,7 +26,7 @@ const formatDate = (dateString: string) => {
 };
 
 export default function Blog() {
-    let { blogId } = useParams()
+    const { blogId } = useParams()
     const [isCreating, setIsCreating] = useState(false)
     const [blog, setBlog] = useState<SanityDocument>()
     const [comments, setComments] = useState<SanityDocument[]>()
