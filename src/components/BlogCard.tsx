@@ -5,7 +5,7 @@ import React from 'react'
 import { PortableTextBlock } from '@portabletext/types';
 import { urlFor } from '../sanity/client';
 
-function BlogCard({ id, slug, imageURL, title, category, description }: { id: string, slug: string, imageURL: string, title: string, category: string, description: PortableTextBlock }) {
+function BlogCard({ id, imageURL, title, category, description }: { id: string, imageURL: string, title: string, category: string, description: PortableTextBlock }) {
   const paragraphBlocks = Array.isArray(description)
     ? description.filter((block) => block._type === 'block' && block.style === 'normal' && !block.listItem).slice(0, 100)
     : [];

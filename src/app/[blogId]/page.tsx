@@ -26,12 +26,10 @@ const formatDate = (dateString: string) => {
 
 export default function page({ params }: { params: { blogId: string } }) {
     const [isCreating, setIsCreating] = useState(false)
-    const [blogId, setBlogId] = useState("")
     const [blog, setBlog] = useState<SanityDocument>()
     const [comments, setComments] = useState<SanityDocument[]>()
     const fetchData = async () => {
         const { blogId } = await params;
-        setBlogId(blogId)
         const blog = await client.fetch<SanityDocument>(BLOG_QUERY, { id: blogId });
         setBlog(blog)
         const comments = await client.fetch<SanityDocument[]>(COMMENT_QUERY, { blogId: blogId }, options);
@@ -39,9 +37,8 @@ export default function page({ params }: { params: { blogId: string } }) {
     }
 
     useEffect(() => {
-        console.log("Fetching")
         fetchData()
-    }, [isCreating])
+    }, [comments])
     return (
         <div className='py-4'>
             <p className='text-center font-bold py-1 text-sm capitalize'>{blog?.category}</p>
