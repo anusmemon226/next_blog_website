@@ -3,7 +3,9 @@ import CommentInput from '@/components/CommentInput'
 import Comments from '@/components/Comments'
 import { client, urlFor } from '@/sanity/client';
 import { PortableText, type SanityDocument } from "next-sanity";
+import { useDynamicRouteParams } from 'next/dist/server/app-render/dynamic-rendering';
 import Image from 'next/image'
+import { useParams, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 
@@ -24,12 +26,13 @@ const formatDate = (dateString: string) => {
     }).format(date);
 };
 
-export default function Blog({ params }: { params: { blogId: string } }) {
+export default function Blog() {
+    let { blogId } = useParams()
     const [isCreating, setIsCreating] = useState(false)
     const [blog, setBlog] = useState<SanityDocument>()
     const [comments, setComments] = useState<SanityDocument[]>()
     const fetchData = async () => {
-        const { blogId } = await params;
+        console.log(blogId)
         const blog = await client.fetch<SanityDocument>(BLOG_QUERY, { id: blogId });
         setBlog(blog)
         const comments = await client.fetch<SanityDocument[]>(COMMENT_QUERY, { blogId: blogId }, options);
@@ -37,8 +40,10 @@ export default function Blog({ params }: { params: { blogId: string } }) {
     }
 
     useEffect(() => {
-        fetchData()
-    }, [comments])
+        if (blogId && blogId !== "favicon.ico") {
+            fetchData();
+        }
+    }, [blogId])
     return (
         <div className='py-4'>
             <p className='text-center font-bold py-1 text-sm capitalize'>{blog?.category}</p>

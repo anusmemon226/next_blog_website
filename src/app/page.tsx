@@ -19,7 +19,8 @@ export default async function Home() {
       <div className="flex flex-wrap gap-x-2 gap-y-3 max-sm:px-4 sm:px-16 py-6">
         {
           blogs?.map((blog)=>{
-            return <BlogCard key={blog._id} id={blog._id} imageURL={blog.image.asset._ref} title={blog.title} category={blog.category} description={blog.description}/>
+            const blog_id = blog._id
+            return <BlogCard key={blog_id} id={blog_id} imageURL={blog.image.asset._ref} title={blog.title} category={blog.category} description={blog.description}/>
           })
         }
       </div>

@@ -6,11 +6,12 @@ import { PortableTextBlock } from '@portabletext/types';
 import { urlFor } from '../sanity/client';
 
 function BlogCard({ id, imageURL, title, category, description }: { id: string, imageURL: string, title: string, category: string, description: PortableTextBlock }) {
+  const blogId = id
   const paragraphBlocks = Array.isArray(description)
     ? description.filter((block) => block._type === 'block' && block.style === 'normal' && !block.listItem).slice(0, 100)
     : [];
   return (
-    <Link href={`/${id}`} className='w-full sm:w-[49%] lg:w-[32.5%]'>
+    <Link href={`/${blogId}`} className='w-full sm:w-[49%] lg:w-[32.5%]'>
       <Image priority src={urlFor(imageURL).url()} style={{ height: 300, objectFit: "cover" }} width={1000} height={100} className='rounded-3xl' alt='' />
       <div className='flex flex-col gap-y-1 py-4'>
         <p className='font-bold text-sm capitalize'>{category}</p>
