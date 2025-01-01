@@ -19,10 +19,17 @@ const formatDate = (dateString: string) => {
         hour12: true, // 12-hour clock
     }).format(date);
 };
-export default async function Blog({params}:{params:{blogId:string}}) {
-    const { blogId } = await params
-    const blog = await client.fetch<SanityDocument>(BLOG_QUERY, { id: blogId });
-    const comments = await client.fetch<SanityDocument[]>(COMMENT_QUERY, { blogId: blogId }, options);
+
+interface PageProps {
+    params: Promise<{
+        id: string
+    }>
+}
+
+export default async function Blog({ params }: PageProps) {
+    const { id } = await params
+    const blog = await client.fetch<SanityDocument>(BLOG_QUERY, { id: id });
+    const comments = await client.fetch<SanityDocument[]>(COMMENT_QUERY, { blogId: id }, options);
     return (
         <div className='py-4'>
             <p className='text-center font-bold py-1 text-sm capitalize'>{blog?.category}</p>
@@ -45,7 +52,7 @@ export default async function Blog({params}:{params:{blogId:string}}) {
                     />
                 )}
             </div>
-            <CommentInput blogId={blog ? blog._id : ""}/>
+            <CommentInput blogId={blog ? blog._id : ""} />
             <Comments comments={comments ? comments : []} />
         </div>
     )
