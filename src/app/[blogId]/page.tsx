@@ -23,7 +23,7 @@ const formatDate = (dateString: string) => {
     }).format(date);
 };
 
-export default async function Blog({params}:{params:{blogId:string}}) {
+export default async function Blog({params}:{params:{blogId:Promise<string>}}) {
     const {blogId} = params
     const blog = await client.fetch<SanityDocument>(BLOG_QUERY, { id: blogId });
     const comments = await client.fetch<SanityDocument[]>(COMMENT_QUERY, { blogId: blogId }, options);
