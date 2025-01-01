@@ -24,8 +24,9 @@ const formatDate = (dateString: string) => {
 };
 
 export default async function Blog({params}:{params:{blogId:string}}) {
-    const blog = await client.fetch<SanityDocument>(BLOG_QUERY, { id: params.blogId });
-    const comments = await client.fetch<SanityDocument[]>(COMMENT_QUERY, { blogId: params.blogId }, options);
+    const {blogId} = params
+    const blog = await client.fetch<SanityDocument>(BLOG_QUERY, { id: blogId });
+    const comments = await client.fetch<SanityDocument[]>(COMMENT_QUERY, { blogId: blogId }, options);
     return (
         <div className='py-4'>
             <p className='text-center font-bold py-1 text-sm capitalize'>{blog?.category}</p>
