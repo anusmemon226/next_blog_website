@@ -26,13 +26,13 @@ function CommentInput({ blogId }: { blogId: string}) {
                     publishedAt: new Date().toISOString()
                 }
             }
-        ]).then(async (res) => {
+        ]).then(async () => {
             setForm({
                 name: "",
                 email: "",
                 comment: ""
             })
-        }).catch((err) => {
+        }).catch(() => {
         }).finally(()=>{
             setIsCreating(false)
         });
