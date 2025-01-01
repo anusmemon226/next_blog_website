@@ -2,7 +2,8 @@
 import React, { useState } from 'react'
 import { client } from '@/sanity/client'
 
-function CommentInput({ blogId, isCreating, setIsCreating }: { blogId: string, isCreating: boolean, setIsCreating: (resp: boolean) => void}) {
+function CommentInput({ blogId }: { blogId: string}) {
+    const [isCreating,setIsCreating] = useState(false)
     const [form, setForm] = useState({
         name: "",
         email: "",

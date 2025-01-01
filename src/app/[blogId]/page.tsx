@@ -1,11 +1,9 @@
-"use client"
 import CommentInput from '@/components/CommentInput'
 import Comments from '@/components/Comments'
 import { client, urlFor } from '@/sanity/client';
 import { PortableText, type SanityDocument } from "next-sanity";
 import Image from 'next/image'
-import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 
 const BLOG_QUERY = `*[_type == "blog" && _id == $id][0]`;
@@ -25,24 +23,9 @@ const formatDate = (dateString: string) => {
     }).format(date);
 };
 
-export default function Blog() {
-    const { blogId } = useParams()
-    const [isCreating, setIsCreating] = useState(false)
-    const [blog, setBlog] = useState<SanityDocument>()
-    const [comments, setComments] = useState<SanityDocument[]>()
-    const fetchData = async () => {
-        console.log(blogId)
-        const blog = await client.fetch<SanityDocument>(BLOG_QUERY, { id: blogId });
-        setBlog(blog)
-        const comments = await client.fetch<SanityDocument[]>(COMMENT_QUERY, { blogId: blogId }, options);
-        setComments(comments)
-    }
-
-    useEffect(() => {
-        if (blogId && blogId !== "favicon.ico") {
-            fetchData();
-        }
-    }, [blogId])
+export default async function Blog({params}:{params:{blogId:string}}) {
+    const blog = await client.fetch<SanityDocument>(BLOG_QUERY, { id: params.blogId });
+    const comments = await client.fetch<SanityDocument[]>(COMMENT_QUERY, { blogId: params.blogId }, options);
     return (
         <div className='py-4'>
             <p className='text-center font-bold py-1 text-sm capitalize'>{blog?.category}</p>
@@ -65,7 +48,7 @@ export default function Blog() {
                     />
                 )}
             </div>
-            <CommentInput blogId={blog ? blog._id : ""} isCreating={isCreating} setIsCreating={(resp) => setIsCreating(resp)} />
+            <CommentInput blogId={blog ? blog._id : ""}/>
             <Comments comments={comments ? comments : []} />
         </div>
     )
