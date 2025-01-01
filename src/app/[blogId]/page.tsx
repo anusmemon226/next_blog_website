@@ -24,7 +24,7 @@ const formatDate = (dateString: string) => {
     }).format(date);
 };
 
-export default function page({ params }: { params: { blogId: string } }) {
+export default function Blog({ params }: { params: { blogId: string } }) {
     const [isCreating, setIsCreating] = useState(false)
     const [blog, setBlog] = useState<SanityDocument>()
     const [comments, setComments] = useState<SanityDocument[]>()
