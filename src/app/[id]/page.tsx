@@ -6,7 +6,7 @@ import Image from 'next/image'
 import React from 'react'
 const BLOG_QUERY = `*[_type == "blog" && _id == $id][0]`;
 const COMMENT_QUERY = `*[_type == "comment" && blogId == $blogId]|order(publishedAt desc)`
-const options = { next: { revalidate: 30 } };
+const options = { next: { revalidate: 1 } };
 const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('en-US', {

@@ -27,15 +27,12 @@ function CommentInput({ blogId }: { blogId: string}) {
                 }
             }
         ]).then(async (res) => {
-            console.log(res)
-            console.log(`Document created with ID: ${res}`);
             setForm({
                 name: "",
                 email: "",
                 comment: ""
             })
         }).catch((err) => {
-            console.error('Insert failed:', err.message);
         }).finally(()=>{
             setIsCreating(false)
         });

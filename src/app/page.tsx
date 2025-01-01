@@ -15,7 +15,7 @@ export default async function Home() {
   return (
     <div>
       <h1 className="py-3 font-bold text-xl sm:text-3xl text-center">Explore Blogs</h1>
-      <SearchBar />
+      {/* <SearchBar/> */}
       <div className="flex flex-wrap gap-x-2 gap-y-3 max-sm:px-4 sm:px-16 py-6">
         {
           blogs?.map((blog)=>{
